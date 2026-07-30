@@ -1,0 +1,33 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('coupons', function (Blueprint $table) {
+            $table->id();
+            $table->string('code', 40)->unique();
+            $table->enum('type', ['flat', 'percent'])->default('percent');
+            $table->decimal('value', 10, 2);
+            $table->decimal('min_booking_amount', 10, 2)->nullable();
+            $table->decimal('max_discount', 10, 2)->nullable();
+            $table->unsignedInteger('usage_limit')->nullable();
+            $table->unsignedInteger('used_count')->default(0);
+            $table->date('valid_from')->nullable();
+            $table->date('valid_until')->nullable();
+            $table->boolean('is_active')->default(true);
+            // NULL = platform-wide coupon, otherwise scoped to one agency
+            $table->foreignId('applicable_agency_id')->nullable()->constrained('agencies')->cascadeOnDelete();
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('coupons');
+    }
+};
