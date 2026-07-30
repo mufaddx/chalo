@@ -62,7 +62,10 @@ export default function Navbar() {
     <header
       className={cn(
         "sticky top-0 z-50 transition-colors duration-300",
-        scrolled ? "glass border-b border-line" : "bg-transparent"
+        // Solid (not translucent) once scrolled — a "glass" blur here let
+        // dark-section text (e.g. the hero) bleed through unreadably as it
+        // scrolled underneath.
+        scrolled ? "bg-paper border-b border-line" : "bg-transparent"
       )}
     >
       <div className="container-page flex h-[72px] items-center justify-between">

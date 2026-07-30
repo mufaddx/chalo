@@ -64,7 +64,7 @@ export default function SearchBar() {
           <button
             onClick={() => setExpanded((v) => !v)}
             className={cn(
-              "hidden h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-line text-slate transition-colors hover:text-ink sm:flex",
+              "flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-line text-slate transition-colors hover:text-ink",
               expanded && "bg-paper-soft text-ink"
             )}
             aria-label="More filters"
