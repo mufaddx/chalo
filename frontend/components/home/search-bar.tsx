@@ -2,15 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { CalendarDays, MapPin, Navigation, Search, SlidersHorizontal, Sparkles, Users, Wallet } from "lucide-react";
+import { CalendarDays, MapPin, Navigation, Search, SlidersHorizontal, Users, Wallet } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-const SUGGESTIONS = [
-  "Weekend beach trip under ₹15,000",
-  "Honeymoon package with private pool villa",
-  "Family-friendly hill station, 4+ nights",
-  "Solo trek with a small group",
-];
 
 // City-search field has no backend endpoint to query, so this is a
 // client-side filtered list of major Indian cities/destinations.
@@ -42,8 +35,8 @@ function CityField({
 
   return (
     <div className="relative">
-      <label className="flex items-center gap-3 rounded-xl px-4 py-3 hover:bg-paper-soft">
-        <Icon size={17} className="shrink-0 text-slate" />
+      <label className="flex items-center gap-2.5 rounded-xl px-3.5 py-2 hover:bg-paper-soft">
+        <Icon size={16} className="shrink-0 text-slate" />
         <span className="flex flex-col">
           <span className="text-[11px] font-medium text-slate">{label}</span>
           <input
@@ -94,20 +87,20 @@ export default function SearchBar() {
 
   return (
     <div className="rounded-[var(--radius-lg)] border border-white/10 bg-white p-2 text-ink shadow-[0_30px_60px_-25px_rgba(0,0,0,0.5)] sm:p-3">
-      <div className="grid grid-cols-1 gap-1 sm:grid-cols-2 sm:divide-x sm:divide-line lg:grid-cols-[1fr_1fr_0.85fr_0.85fr_auto]">
+      <div className="grid grid-cols-1 divide-y divide-line sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-[1fr_1fr_0.85fr_0.85fr_auto]">
         <CityField label="From" icon={Navigation} value={from} onChange={setFrom} placeholder="Departure city" />
         <CityField label="Destination" icon={MapPin} value={destination} onChange={setDestination} placeholder="Where to?" />
 
-        <label className="flex items-center gap-3 rounded-xl px-4 py-3 hover:bg-paper-soft">
-          <CalendarDays size={17} className="shrink-0 text-slate" />
+        <label className="flex items-center gap-2.5 rounded-xl px-3.5 py-2 hover:bg-paper-soft">
+          <CalendarDays size={16} className="shrink-0 text-slate" />
           <span className="flex flex-col">
             <span className="text-[11px] font-medium text-slate">Travel date</span>
             <input type="date" className="w-full bg-transparent text-sm font-medium text-ink focus:outline-none" />
           </span>
         </label>
 
-        <label className="flex items-center gap-3 rounded-xl px-4 py-3 hover:bg-paper-soft">
-          <Users size={17} className="shrink-0 text-slate" />
+        <label className="flex items-center gap-2.5 rounded-xl px-3.5 py-2 hover:bg-paper-soft">
+          <Users size={16} className="shrink-0 text-slate" />
           <span className="flex flex-col">
             <span className="text-[11px] font-medium text-slate">Travellers</span>
             <select className="w-full bg-transparent text-sm font-medium text-ink focus:outline-none">
@@ -119,22 +112,22 @@ export default function SearchBar() {
           </span>
         </label>
 
-        <div className="flex items-center gap-2 p-2">
+        <div className="flex items-center gap-2 py-2">
           <button
             onClick={() => setExpanded((v) => !v)}
             className={cn(
-              "flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-line text-slate transition-colors hover:text-ink",
+              "flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-line text-slate transition-colors hover:text-ink",
               expanded && "bg-paper-soft text-ink"
             )}
             aria-label="More filters"
           >
-            <SlidersHorizontal size={17} />
+            <SlidersHorizontal size={16} />
           </button>
           <button
             onClick={onSearch}
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-gold px-6 text-sm font-semibold text-ink transition-colors hover:bg-gold-deep lg:w-auto"
+            className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-gold px-6 text-sm font-semibold text-ink transition-colors hover:bg-gold-deep lg:w-auto"
           >
-            <Search size={17} /> Search
+            <Search size={16} /> Search
           </button>
         </div>
       </div>
@@ -171,21 +164,6 @@ export default function SearchBar() {
           </select>
         </div>
       )}
-
-      <div className="flex flex-wrap items-center gap-2 px-3 pb-2 pt-3">
-        <span className="inline-flex items-center gap-1 text-[11px] font-medium text-gold-deep">
-          <Sparkles size={12} /> Try:
-        </span>
-        {SUGGESTIONS.map((s) => (
-          <button
-            key={s}
-            onClick={() => setDestination(s)}
-            className="rounded-full border border-line px-3 py-1.5 text-xs text-slate transition-colors hover:border-ink hover:text-ink"
-          >
-            {s}
-          </button>
-        ))}
-      </div>
     </div>
   );
 }
