@@ -371,6 +371,12 @@ class DatabaseSeeder extends Seeder
                 ['departure_date' => now()->addDays(38 + $i), 'seats_total' => 12, 'seats_available' => 12, 'status' => 'open'],
             ]);
 
+            // A past, completed tour date — reviews require a real completed
+            // booking against it (matches ReviewController's eligibility rule).
+            $pastDate = $tour->tourDates()->create([
+                'departure_date' => now()->subDays(20 + $i), 'seats_total' => 12, 'seats_available' => 0, 'status' => 'full',
+            ]);
+
             $tour->images()->createMany([
                 ['path' => self::img($def['photo']), 'type' => 'image', 'sort_order' => 0],
                 ['path' => self::img($def['photo'], 1200, 801), 'type' => 'image', 'sort_order' => 1],
@@ -379,9 +385,28 @@ class DatabaseSeeder extends Seeder
 
             $ratingSum = 0;
             foreach ($def['reviews'] as [$authorName, $rating, $text]) {
-                Review::create([
+                $reviewer = $reviewers[$authorName];
+
+                $booking = \App\Models\Booking::create([
+                    'user_id' => $reviewer->id,
                     'tour_id' => $tour->id,
-                    'user_id' => $reviewers[$authorName]->id,
+                    'tour_date_id' => $pastDate->id,
+                    'agency_id' => $agencies[$def['agency']]->id,
+                    'customer_name' => $reviewer->name,
+                    'customer_email' => $reviewer->email,
+                    'customer_phone' => '+91 90000 00000',
+                    'adults' => 2,
+                    'children' => 0,
+                    'total_amount' => $def['price'] * 2,
+                    'payment_status' => 'paid',
+                    'status' => 'completed',
+                    'completed_at' => now()->subDays(15 + $i),
+                ]);
+
+                Review::create([
+                    'booking_id' => $booking->id,
+                    'tour_id' => $tour->id,
+                    'user_id' => $reviewer->id,
                     'agency_id' => $agencies[$def['agency']]->id,
                     'rating' => $rating,
                     'review_text' => $text,
