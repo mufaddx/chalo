@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import {
   LayoutGrid, CalendarCheck, Heart, Scale, Users, User, Bell, LifeBuoy, Settings, LogOut,
 } from "lucide-react";
 import { currentCustomer, notifications } from "@/lib/dashboard-data";
+import { useAuth } from "@/lib/auth/auth-context";
 import { cn } from "@/lib/utils";
 
 const NAV = [
@@ -23,17 +24,35 @@ const NAV = [
 
 export default function DashboardSidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const { user, logout } = useAuth();
   const unreadCount = notifications.filter((n) => !n.read).length;
+
+  // Real accounts have no avatar-upload feature yet, so avatar_path is
+  // always null in practice — fall back to an initial instead of a mock photo.
+  const displayName = user?.name ?? currentCustomer.name;
+  const displayEmail = user?.email ?? currentCustomer.email;
+
+  const handleLogout = async () => {
+    await logout();
+    router.push("/login");
+  };
 
   return (
     <aside className="flex h-full flex-col">
       <div className="flex items-center gap-3 border-b border-line px-5 py-6">
-        <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full border border-line">
-          <Image src={currentCustomer.avatar} alt={currentCustomer.name} fill className="object-cover" />
-        </div>
+        {user?.avatar_path ? (
+          <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full border border-line">
+            <Image src={user.avatar_path} alt={displayName} fill className="object-cover" />
+          </div>
+        ) : (
+          <div className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-line bg-paper-soft font-display text-base font-semibold text-ink">
+            {displayName.charAt(0).toUpperCase()}
+          </div>
+        )}
         <div className="min-w-0">
-          <p className="truncate font-display text-[14.5px] font-semibold text-ink">{currentCustomer.name}</p>
-          <p className="truncate text-[12px] text-slate">{currentCustomer.email}</p>
+          <p className="truncate font-display text-[14.5px] font-semibold text-ink">{displayName}</p>
+          <p className="truncate text-[12px] text-slate">{displayEmail}</p>
         </div>
       </div>
 
@@ -67,12 +86,12 @@ export default function DashboardSidebar() {
       </nav>
 
       <div className="border-t border-line p-3">
-        <Link
-          href="/"
-          className="flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-[14px] font-medium text-ink/75 hover:bg-paper-soft"
+        <button
+          onClick={handleLogout}
+          className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-[14px] font-medium text-ink/75 hover:bg-paper-soft"
         >
           <LogOut size={17} /> Log out
-        </Link>
+        </button>
       </div>
     </aside>
   );

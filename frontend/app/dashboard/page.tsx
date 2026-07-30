@@ -1,11 +1,16 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, CalendarCheck, CheckCircle2, MapPin, Wallet, XCircle, Clock } from "lucide-react";
 import { bookings, currentCustomer, dashboardStats } from "@/lib/dashboard-data";
+import { useAuth } from "@/lib/auth/auth-context";
 import { formatINR } from "@/lib/utils";
 import { BookingStatusBadge } from "@/components/dashboard/status-badge";
 
 export default function DashboardOverviewPage() {
+  const { user } = useAuth();
+  const firstName = (user?.name ?? currentCustomer.name).split(" ")[0];
   const stats = dashboardStats();
   const nextTrip = bookings
     .filter((b) => b.status === "confirmed" || b.status === "pending")
@@ -22,7 +27,7 @@ export default function DashboardOverviewPage() {
     <div className="flex flex-col gap-6">
       <div>
         <h1 className="font-display text-2xl font-semibold text-ink">
-          Welcome back, {currentCustomer.name.split(" ")[0]}
+          Welcome back, {firstName}
         </h1>
         <p className="mt-1 text-sm text-slate">Member since {currentCustomer.memberSince}</p>
       </div>

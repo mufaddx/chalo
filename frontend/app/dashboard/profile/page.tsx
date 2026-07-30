@@ -4,9 +4,19 @@ import { useState } from "react";
 import Image from "next/image";
 import { Camera, Check } from "lucide-react";
 import { currentCustomer } from "@/lib/dashboard-data";
+import { useAuth } from "@/lib/auth/auth-context";
 
 export default function ProfilePage() {
   const [saved, setSaved] = useState(false);
+  const { user } = useAuth();
+
+  // Name/email/phone come from the real account. Date of birth, gender,
+  // address, and emergency contact aren't fields the backend exposes yet
+  // (no update-profile endpoint exists), so those stay as placeholders
+  // rather than showing another person's mock data as if it were real.
+  const displayName = user?.name ?? "";
+  const displayEmail = user?.email ?? "";
+  const displayPhone = user?.phone ?? "";
 
   return (
     <div>
@@ -22,18 +32,24 @@ export default function ProfilePage() {
         className="mt-6 max-w-xl rounded-[var(--radius-lg)] border border-line bg-white p-6"
       >
         <div className="flex items-center gap-4">
-          <div className="relative h-20 w-20 overflow-hidden rounded-full border border-line">
-            <Image src={currentCustomer.avatar} alt={currentCustomer.name} fill className="object-cover" />
-          </div>
+          {user?.avatar_path ? (
+            <div className="relative h-20 w-20 overflow-hidden rounded-full border border-line">
+              <Image src={user.avatar_path} alt={displayName} fill className="object-cover" />
+            </div>
+          ) : (
+            <div className="grid h-20 w-20 place-items-center rounded-full border border-line bg-paper-soft font-display text-2xl font-semibold text-ink">
+              {displayName ? displayName.charAt(0).toUpperCase() : "?"}
+            </div>
+          )}
           <button type="button" className="inline-flex items-center gap-1.5 rounded-full border border-line px-3.5 py-2 text-xs font-medium text-ink hover:border-ink">
             <Camera size={13} /> Change photo
           </button>
         </div>
 
         <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <Field label="Full name" name="name" defaultValue={currentCustomer.name} />
-          <Field label="Email" name="email" type="email" defaultValue={currentCustomer.email} />
-          <Field label="Phone" name="phone" defaultValue={currentCustomer.phone} />
+          <Field label="Full name" name="name" defaultValue={displayName} />
+          <Field label="Email" name="email" type="email" defaultValue={displayEmail} />
+          <Field label="Phone" name="phone" defaultValue={displayPhone} />
           <Field label="Date of birth" name="dob" type="date" defaultValue={currentCustomer.dateOfBirth} />
           <label className="flex flex-col gap-1.5 text-[13px] font-medium text-slate">
             Gender
