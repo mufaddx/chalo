@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { PanelLeft, X } from "lucide-react";
 import DashboardSidebar from "./sidebar";
 
 export default function DashboardShell({ children }: { children: React.ReactNode }) {
@@ -14,9 +14,9 @@ export default function DashboardShell({ children }: { children: React.ReactNode
         <button
           onClick={() => setOpen(true)}
           className="grid h-10 w-10 place-items-center rounded-full border border-line text-ink"
-          aria-label="Open menu"
+          aria-label="Open account menu"
         >
-          <Menu size={18} />
+          <PanelLeft size={18} />
         </button>
       </div>
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { PanelLeft, X } from "lucide-react";
 import AgencySidebar from "./sidebar";
 
 export default function AgencyDashboardShell({ children }: { children: React.ReactNode }) {
@@ -14,9 +14,9 @@ export default function AgencyDashboardShell({ children }: { children: React.Rea
         <button
           onClick={() => setOpen(true)}
           className="grid h-10 w-10 place-items-center rounded-full border border-line text-ink"
-          aria-label="Open menu"
+          aria-label="Open agency menu"
         >
-          <Menu size={18} />
+          <PanelLeft size={18} />
         </button>
       </div>
 
