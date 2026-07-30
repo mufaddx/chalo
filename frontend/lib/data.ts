@@ -1,7 +1,54 @@
 import type { Agency, Destination, Tour, TourCategory } from "@/types";
 
+// Real, verified travel photos (checked to actually load) mapped by
+// destination keyword, so every seed used below resolves to a genuine
+// photo of that place instead of an arbitrary random stock image.
+const DESTINATION_PHOTOS: Record<string, string> = {
+  ladakh: "https://images.unsplash.com/photo-1619837374214-f5b9eb80876d",
+  goa: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2",
+  kerala: "https://plus.unsplash.com/premium_photo-1697729438401-fcb4ff66d9a8",
+  rajasthan: "https://plus.unsplash.com/premium_photo-1661963054563-ce928e477ff3",
+  bali: "https://images.unsplash.com/photo-1555400038-63f5ba517a47",
+  santorini: "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e",
+  swiss: "https://images.unsplash.com/photo-1586752488885-6ce47fdfd874",
+  alps: "https://images.unsplash.com/photo-1586752488885-6ce47fdfd874",
+  vietnam: "https://images.unsplash.com/photo-1748102289186-f27325fbdc7b",
+};
+
+const VISA_PHOTO = "https://images.unsplash.com/photo-1586441133374-ed1cb4007a47";
+const GENERIC_TRAVEL_PHOTO = "https://images.unsplash.com/photo-1543797414-a0c3ad076f7c";
+
+// Agency logo/cover seeds are abbreviations (hae/sun/bwt/mer/rrt), not
+// destination names, so they're mapped to whichever destination that
+// agency is themed around; Meridian is a general international agency
+// with no fixed destination, so it gets a generic travel photo instead.
+const AGENCY_PHOTOS: Record<string, string> = {
+  hae: DESTINATION_PHOTOS.ladakh,
+  sun: DESTINATION_PHOTOS.goa,
+  bwt: DESTINATION_PHOTOS.kerala,
+  rrt: DESTINATION_PHOTOS.rajasthan,
+  mer: GENERIC_TRAVEL_PHOTO,
+};
+
+function photoFor(seed: string): string {
+  const lower = seed.toLowerCase();
+
+  if (lower.includes("visa")) return VISA_PHOTO;
+
+  for (const [key, url] of Object.entries(DESTINATION_PHOTOS)) {
+    if (lower.includes(key)) return url;
+  }
+
+  if (lower.startsWith("logo-") || lower.startsWith("cover-")) {
+    const code = lower.split("-")[1];
+    if (code && AGENCY_PHOTOS[code]) return AGENCY_PHOTOS[code];
+  }
+
+  return GENERIC_TRAVEL_PHOTO;
+}
+
 const img = (seed: string, w = 1200, h = 800) =>
-  `https://picsum.photos/seed/${seed}/${w}/${h}`;
+  `${photoFor(seed)}?fm=jpg&q=75&w=${w}&h=${h}&fit=crop&auto=format`;
 
 // ---------------------------------------------------------------------------
 // Categories

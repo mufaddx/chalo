@@ -1,7 +1,16 @@
 import Image from "next/image";
 import { InstagramGlyph } from "@/components/shared/social-icons";
 
-const shots = ["ig-1", "ig-2", "ig-3", "ig-4", "ig-5", "ig-6"];
+// Real, verified travel photos (same curated set used in lib/data.ts)
+// instead of arbitrary random stock images.
+const shots = [
+  "https://images.unsplash.com/photo-1619837374214-f5b9eb80876d", // Ladakh
+  "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2", // Goa
+  "https://plus.unsplash.com/premium_photo-1697729438401-fcb4ff66d9a8", // Kerala
+  "https://images.unsplash.com/photo-1555400038-63f5ba517a47", // Bali
+  "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e", // Santorini
+  "https://plus.unsplash.com/premium_photo-1661963054563-ce928e477ff3", // Rajasthan
+];
 
 export default function InstagramGallery() {
   return (
@@ -16,7 +25,7 @@ export default function InstagramGallery() {
           {shots.map((s) => (
             <div key={s} className="group relative aspect-square overflow-hidden rounded-[var(--radius-md)]">
               <Image
-                src={`https://picsum.photos/seed/${s}/400/400`}
+                src={`${s}?fm=jpg&q=70&w=400&h=400&fit=crop&auto=format`}
                 alt="Traveller photo shared on Instagram"
                 fill
                 sizes="200px"
