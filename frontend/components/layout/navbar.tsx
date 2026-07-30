@@ -1,8 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Compass, Heart, LogOut, Menu, Scale, Search, User, X } from "lucide-react";
+import {
+  Bell, CalendarCheck, Compass, Heart, LayoutGrid, LifeBuoy, LogOut, Menu, Scale, Search, Settings, User, Users, X,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/lib/auth/auth-context";
 
@@ -13,10 +16,32 @@ const NAV_LINKS = [
   { label: "Blog", href: "/#blog" },
 ];
 
+// Mirrors components/dashboard/sidebar.tsx's NAV — the mobile menu shows
+// these alongside the site links instead of the dashboard having its own
+// separate hamburger/drawer, so there's only ever one mobile menu control.
+const ACCOUNT_LINKS = [
+  { label: "Overview", href: "/dashboard", icon: LayoutGrid },
+  { label: "My Bookings", href: "/dashboard/bookings", icon: CalendarCheck },
+  { label: "Wishlist", href: "/dashboard/wishlist", icon: Heart },
+  { label: "Compare Tours", href: "/dashboard/compare", icon: Scale },
+  { label: "Travellers", href: "/dashboard/travellers", icon: Users },
+  { label: "Profile", href: "/dashboard/profile", icon: User },
+  { label: "Notifications", href: "/dashboard/notifications", icon: Bell },
+  { label: "Support", href: "/dashboard/support", icon: LifeBuoy },
+  { label: "Settings", href: "/dashboard/settings", icon: Settings },
+];
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const { user, status, logout } = useAuth();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    setOpen(false);
+    await logout();
+    router.push("/login");
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -33,14 +58,24 @@ export default function Navbar() {
       )}
     >
       <div className="container-page flex h-[72px] items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="grid h-9 w-9 place-items-center rounded-full bg-ink text-gold">
-            <Compass size={18} />
-          </span>
-          <span className="font-display text-[20px] font-semibold tracking-tight text-ink">
-            Voyagr
-          </span>
-        </Link>
+        <div className="flex items-center gap-2">
+          <button
+            className="grid h-10 w-10 place-items-center rounded-full text-ink lg:hidden"
+            aria-label="Toggle menu"
+            onClick={() => setOpen((v) => !v)}
+          >
+            {open ? <X size={22} /> : <Menu size={22} />}
+          </button>
+
+          <Link href="/" className="flex items-center gap-2">
+            <span className="grid h-9 w-9 place-items-center rounded-full bg-ink text-gold">
+              <Compass size={18} />
+            </span>
+            <span className="font-display text-[20px] font-semibold tracking-tight text-ink">
+              Voyagr
+            </span>
+          </Link>
+        </div>
 
         <nav className="hidden items-center gap-8 lg:flex">
           {NAV_LINKS.map((link) => (
@@ -106,14 +141,6 @@ export default function Navbar() {
             List your agency
           </Link>
         </div>
-
-        <button
-          className="grid h-10 w-10 place-items-center rounded-full text-ink lg:hidden"
-          aria-label="Toggle menu"
-          onClick={() => setOpen((v) => !v)}
-        >
-          {open ? <X size={22} /> : <Menu size={22} />}
-        </button>
       </div>
 
       {open && (
@@ -129,16 +156,32 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+
+            {status === "authenticated" && user && (
+              <>
+                <div className="my-2 h-px bg-line" />
+                <span className="px-3 pb-1 text-[11px] font-semibold uppercase tracking-wide text-slate">
+                  My Account
+                </span>
+                {ACCOUNT_LINKS.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-[15px] font-medium text-ink hover:bg-paper-soft"
+                    onClick={() => setOpen(false)}
+                  >
+                    <link.icon size={17} className="text-slate" />
+                    {link.label}
+                  </Link>
+                ))}
+              </>
+            )}
+
             <div className="mt-2 flex gap-2 px-3">
               {status === "authenticated" && user ? (
-                <>
-                  <Link href="/dashboard" className="flex-1 rounded-full border border-line px-3 py-2.5 text-center text-sm font-medium">
-                    {user.name.split(" ")[0]}
-                  </Link>
-                  <button onClick={() => logout()} className="flex-1 rounded-full bg-ink px-3 py-2.5 text-center text-sm font-medium text-white">
-                    Log out
-                  </button>
-                </>
+                <button onClick={handleLogout} className="flex-1 rounded-full bg-ink px-3 py-2.5 text-center text-sm font-medium text-white">
+                  Log out
+                </button>
               ) : (
                 <>
                   <Link href="/login" className="flex-1 rounded-full border border-line px-3 py-2.5 text-center text-sm font-medium">
