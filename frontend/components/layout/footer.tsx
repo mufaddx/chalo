@@ -16,9 +16,9 @@ const COLUMNS = [
   {
     title: "For travellers",
     links: [
-      { label: "My bookings", href: "/dashboard" },
-      { label: "Wishlist", href: "/dashboard" },
-      { label: "Compare tours", href: "/dashboard" },
+      { label: "My bookings", href: "/dashboard/bookings" },
+      { label: "Wishlist", href: "/dashboard/wishlist" },
+      { label: "Compare tours", href: "/dashboard/compare" },
       { label: "Help centre", href: "/support" },
       { label: "Cancellation policy", href: "/support" },
     ],
@@ -29,17 +29,17 @@ const COLUMNS = [
       { label: "List your agency", href: "/agency/register" },
       { label: "Agency dashboard", href: "/agency/dashboard" },
       { label: "Verification process", href: "/agency/register" },
-      { label: "Success stories", href: "/#" },
+      { label: "Success stories", href: "/success-stories" },
     ],
   },
   {
     title: "Company",
     links: [
-      { label: "About Voyagr", href: "/#" },
-      { label: "Careers", href: "/#" },
-      { label: "Press", href: "/#" },
+      { label: "About Voyagr", href: "/about" },
+      { label: "Careers", href: "/careers" },
+      { label: "Press", href: "/press" },
       { label: "Contact us", href: "/support" },
-      { label: "Terms & privacy", href: "/#" },
+      { label: "Terms & privacy", href: "/terms" },
     ],
   },
 ];
@@ -93,9 +93,9 @@ export default function Footer() {
         <div className="container-page flex flex-col gap-3 py-6 text-xs text-white/40 sm:flex-row sm:items-center sm:justify-between">
           <span>© 2026 Voyagr Technologies Pvt. Ltd. All rights reserved.</span>
           <div className="flex gap-5">
-            <Link href="/#" className="hover:text-gold">Privacy policy</Link>
-            <Link href="/#" className="hover:text-gold">Terms of service</Link>
-            <Link href="/#" className="hover:text-gold">Sitemap</Link>
+            <Link href="/privacy" className="hover:text-gold">Privacy policy</Link>
+            <Link href="/terms" className="hover:text-gold">Terms of service</Link>
+            <Link href="/sitemap-page" className="hover:text-gold">Sitemap</Link>
           </div>
         </div>
       </div>
