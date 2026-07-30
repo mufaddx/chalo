@@ -1,13 +1,19 @@
+import Image from "next/image";
 import RouteLine from "@/components/shared/route-line";
 import SearchBar from "@/components/home/search-bar";
 
 export default function Hero() {
   return (
     <section className="relative overflow-hidden bg-ink text-white">
-      <div className="pointer-events-none absolute inset-0 opacity-40">
-        <div className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-teal blur-3xl animate-drift" />
-        <div className="absolute -bottom-32 -left-16 h-80 w-80 rounded-full bg-gold/20 blur-3xl animate-drift" style={{ animationDelay: "1.5s" }} />
-      </div>
+      <Image
+        src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?fm=jpg&q=80&w=2000&auto=format&fit=crop"
+        alt="The Taj Mahal, India"
+        fill
+        priority
+        className="object-cover"
+      />
+      {/* Darkens the photo enough for white text to stay readable (WCAG contrast) */}
+      <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/85 to-ink/70" />
 
       <div className="container-page relative pt-8 pb-16 sm:pt-12 sm:pb-24">
         <div className="max-w-2xl">
