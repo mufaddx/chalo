@@ -47,8 +47,8 @@ const COLUMNS = [
 export default function Footer() {
   return (
     <footer className="border-t border-line bg-ink text-white/70">
-      <div className="container-page grid gap-12 py-16 lg:grid-cols-[1.4fr_repeat(4,1fr)]">
-        <div>
+      <div className="container-page grid grid-cols-2 gap-x-6 gap-y-10 py-16 sm:gap-x-8 lg:grid-cols-[1.4fr_repeat(4,1fr)] lg:gap-12">
+        <div className="col-span-2 lg:col-span-1">
           <Link href="/" className="flex items-center gap-2">
             <span className="grid h-9 w-9 place-items-center rounded-full bg-gold text-ink">
               <Compass size={18} />
