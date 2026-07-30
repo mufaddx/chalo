@@ -442,3 +442,20 @@ CREATE TABLE payments (
   KEY payments_booking_status_index (booking_id, status),
   CONSTRAINT payments_booking_id_foreign FOREIGN KEY (booking_id) REFERENCES bookings (id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
+
+-- Laravel Sanctum's own table (token auth) — required for every login/register call to work.
+CREATE TABLE personal_access_tokens (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  tokenable_type VARCHAR(191) NOT NULL,
+  tokenable_id BIGINT UNSIGNED NOT NULL,
+  name TEXT NOT NULL,
+  token VARCHAR(64) NOT NULL,
+  abilities TEXT NULL,
+  last_used_at TIMESTAMP NULL,
+  expires_at TIMESTAMP NULL,
+  created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  UNIQUE KEY personal_access_tokens_token_unique (token),
+  KEY personal_access_tokens_tokenable_type_tokenable_id_index (tokenable_type, tokenable_id),
+  KEY personal_access_tokens_expires_at_index (expires_at)
+) ENGINE=InnoDB;
