@@ -9,7 +9,7 @@ export default function Hero() {
         <div className="absolute -bottom-32 -left-16 h-80 w-80 rounded-full bg-gold/20 blur-3xl animate-drift" style={{ animationDelay: "1.5s" }} />
       </div>
 
-      <div className="container-page relative pt-20 pb-16 sm:pt-28 sm:pb-24">
+      <div className="container-page relative pt-8 pb-16 sm:pt-12 sm:pb-24">
         <div className="max-w-2xl">
           <span className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1 font-mono text-[11px] tracking-wide text-white/70">
             212 verified agencies · 3,400+ tours live

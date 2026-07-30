@@ -16,6 +16,14 @@ const NAV_LINKS = [
   { label: "Blog", href: "/#blog" },
 ];
 
+// Shown in the same nav slot instead of NAV_LINKS once logged in.
+const LOGGED_IN_NAV_LINKS = [
+  { label: "Overview", href: "/dashboard" },
+  { label: "My Bookings", href: "/dashboard/bookings" },
+  { label: "Wishlist", href: "/dashboard/wishlist" },
+  { label: "Travellers", href: "/dashboard/travellers" },
+];
+
 // Mirrors components/dashboard/sidebar.tsx's NAV — the mobile menu shows
 // these alongside the site links instead of the dashboard having its own
 // separate hamburger/drawer, so there's only ever one mobile menu control.
@@ -78,7 +86,7 @@ export default function Navbar() {
         </div>
 
         <nav className="hidden items-center gap-8 lg:flex">
-          {NAV_LINKS.map((link) => (
+          {(status === "authenticated" && user ? LOGGED_IN_NAV_LINKS : NAV_LINKS).map((link) => (
             <Link
               key={link.label}
               href={link.href}
