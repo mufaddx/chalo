@@ -17,6 +17,7 @@ function apiAgencyRefToAgency(ref: ApiTourSummary["agency"], fallbackSlug: strin
     completedTours: 0,
     rating: 0,
     reviewCount: 0,
+    followersCount: 0,
     city: "",
     about: "",
     phone: "",
