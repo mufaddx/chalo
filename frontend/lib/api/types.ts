@@ -82,10 +82,24 @@ export interface ApiAgency {
   years_experience: number | null;
   rating_avg: number;
   review_count: number;
+  followers_count: number;
   tour_count?: number;
+  video_count?: number;
   owner_email?: string;
   created_at?: string;
   verifications?: { document_type: string; document_path: string; status: string }[];
+}
+
+export interface ApiVideo {
+  id: number;
+  title: string;
+  description: string | null;
+  video_url: string;
+  thumbnail_url: string | null;
+  views_count: number;
+  status: string;
+  agency?: { id: number; slug: string; name: string; logo_path: string | null; verified: boolean };
+  created_at: string;
 }
 
 export interface ApiBooking {

@@ -95,3 +95,30 @@ export const api = {
     apiFetch<T>(path, { ...options, method: "PATCH", body }),
   delete: <T>(path: string, options?: RequestOptions) => apiFetch<T>(path, { ...options, method: "DELETE" }),
 };
+
+/**
+ * Multipart upload — bypasses apiFetch's JSON.stringify/Content-Type since a
+ * FormData body needs the browser to set its own multipart boundary header.
+ * No prior upload endpoint existed in this client before video uploads.
+ */
+export async function apiUpload<T>(path: string, formData: FormData): Promise<T> {
+  const headers: Record<string, string> = { Accept: "application/json" };
+  const token = getStoredToken();
+  if (token) headers.Authorization = `Bearer ${token}`;
+
+  let response: Response;
+  try {
+    response = await fetch(`${API_BASE_URL}${path}`, { method: "POST", headers, body: formData });
+  } catch {
+    throw new ApiError("Couldn't reach the Voyagr API. Is the backend running and is NEXT_PUBLIC_API_URL set correctly?", 0);
+  }
+
+  const isJson = response.headers.get("content-type")?.includes("application/json");
+  const payload = isJson ? await response.json().catch(() => null) : null;
+
+  if (!response.ok) {
+    throw new ApiError(payload?.message ?? `Request failed with status ${response.status}`, response.status, payload?.errors);
+  }
+
+  return payload as T;
+}

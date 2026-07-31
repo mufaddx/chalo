@@ -1,5 +1,5 @@
-import { api } from "./client";
-import type { ApiBooking, ApiTourSummary, Paginated } from "./types";
+import { api, apiUpload } from "./client";
+import type { ApiBooking, ApiTourSummary, ApiVideo, Paginated } from "./types";
 
 // -- Tours --------------------------------------------------------------
 
@@ -69,6 +69,27 @@ export function closeAgencyTourDate(tourId: number, tourDateId: number) {
 export function fetchAgencyBookings(status?: string) {
   const query = status ? `?status=${status}` : "";
   return api.get<Paginated<ApiBooking>>(`/agency/bookings${query}`);
+}
+
+// -- Videos ---------------------------------------------------------------
+
+export function fetchAgencyVideos() {
+  return api.get<Paginated<ApiVideo>>("/agency/videos");
+}
+
+export async function uploadAgencyVideo(input: { title: string; description?: string; video: File; thumbnail?: File }) {
+  const form = new FormData();
+  form.append("title", input.title);
+  if (input.description) form.append("description", input.description);
+  form.append("video", input.video);
+  if (input.thumbnail) form.append("thumbnail", input.thumbnail);
+
+  const res = await apiUpload<{ data: ApiVideo }>("/agency/videos", form);
+  return res.data;
+}
+
+export function deleteAgencyVideo(videoId: number) {
+  return api.delete<{ message: string }>(`/agency/videos/${videoId}`);
 }
 
 export async function updateAgencyBookingStatus(

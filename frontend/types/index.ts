@@ -27,6 +27,7 @@ export interface Agency {
   completedTours: number;
   rating: number;
   reviewCount: number;
+  followersCount: number;
   city: string;
   about: string;
   phone: string;

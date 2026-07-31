@@ -99,6 +99,7 @@ export const agencies: Agency[] = [
     completedTours: 3120,
     rating: 4.8,
     reviewCount: 612,
+    followersCount: 3840,
     city: "Leh, Ladakh",
     about:
       "High Altitude Expeditions has run small-group treks and road trips across the Himalayas since 2011. Every guide is a certified mountaineer, and every group is capped at 12 travellers so no one gets left staring at the back of someone's rucksack.",
@@ -117,6 +118,7 @@ export const agencies: Agency[] = [
     completedTours: 5480,
     rating: 4.6,
     reviewCount: 894,
+    followersCount: 5210,
     city: "Panjim, Goa",
     about:
       "Sunseeker runs beach-first getaways across Goa and coastal Karnataka. Their villas and boutique stays are hand-inspected twice a year, and they were among the first agencies on the platform to offer free cancellation as standard.",
@@ -135,6 +137,7 @@ export const agencies: Agency[] = [
     completedTours: 2870,
     rating: 4.9,
     reviewCount: 501,
+    followersCount: 2960,
     city: "Alleppey, Kerala",
     about:
       "A family-run operator that has owned and maintained its own houseboat fleet since 2014. Backwater Trails is the highest-rated agency on the platform for Kerala, largely because they never overbook a boat past its licensed capacity.",
@@ -153,6 +156,7 @@ export const agencies: Agency[] = [
     completedTours: 9110,
     rating: 4.7,
     reviewCount: 1443,
+    followersCount: 8130,
     city: "Mumbai, Maharashtra",
     about:
       "Meridian is a full-service international outbound agency with local partner offices in 22 countries. They specialise in visa-inclusive packages, so the price you see is very close to the price you pay at checkout.",
@@ -171,6 +175,7 @@ export const agencies: Agency[] = [
     completedTours: 7650,
     rating: 4.8,
     reviewCount: 1102,
+    followersCount: 6470,
     city: "Jaipur, Rajasthan",
     about:
       "Royal Rajasthan Tours has been putting together heritage-hotel circuits since 2002, with direct relationships with palace properties that most agencies can only book through a reseller.",

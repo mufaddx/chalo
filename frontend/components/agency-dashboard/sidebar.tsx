@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import {
-  LayoutGrid, Package, CalendarCheck, Users, Star, Store, LogOut, BadgeCheck,
+  LayoutGrid, Package, CalendarCheck, Users, Star, Store, LogOut, BadgeCheck, Clapperboard,
 } from "lucide-react";
 import { currentAgency, agencyStats } from "@/lib/agency-dashboard-data";
 import { cn } from "@/lib/utils";
@@ -15,6 +15,7 @@ const NAV = [
   { label: "Bookings", href: "/agency/dashboard/bookings", icon: CalendarCheck },
   { label: "Customers", href: "/agency/dashboard/customers", icon: Users },
   { label: "Reviews", href: "/agency/dashboard/reviews", icon: Star },
+  { label: "Videos", href: "/agency/dashboard/videos", icon: Clapperboard },
   { label: "Agency Profile", href: "/agency/dashboard/profile", icon: Store },
 ];
 

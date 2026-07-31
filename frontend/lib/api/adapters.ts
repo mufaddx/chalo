@@ -112,6 +112,7 @@ export function apiAgencyToAgency(a: ApiAgency): Agency {
     completedTours: 0,
     rating: a.rating_avg,
     reviewCount: a.review_count,
+    followersCount: a.followers_count ?? 0,
     city: a.city ?? "",
     about: a.about ?? "",
     phone: a.phone ?? "",

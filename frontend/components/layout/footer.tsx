@@ -38,7 +38,7 @@ const COLUMNS = [
       { label: "About Voyagr", href: "/about" },
       { label: "Careers", href: "/careers" },
       { label: "Press", href: "/press" },
-      { label: "Contact us", href: "/support" },
+      { label: "Contact us", href: "/contact" },
       { label: "Terms & privacy", href: "/terms" },
     ],
   },
