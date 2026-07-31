@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/layout/navbar";
-import Footer from "@/components/layout/footer";
 import { AuthProvider } from "@/lib/auth/auth-context";
 
 const bricolage = Bricolage_Grotesque({
@@ -40,11 +38,7 @@ export default function RootLayout({
       className={`${bricolage.variable} ${inter.variable} ${jbMono.variable} h-full`}
     >
       <body className="min-h-full flex flex-col bg-paper text-ink antialiased">
-        <AuthProvider>
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </AuthProvider>
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );

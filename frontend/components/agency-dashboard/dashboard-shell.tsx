@@ -8,26 +8,24 @@ export default function AgencyDashboardShell({ children }: { children: React.Rea
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="container-page py-6 sm:py-8">
-      <div className="mb-4 flex items-center justify-between lg:hidden">
-        <h1 className="font-display text-lg font-semibold text-ink">Agency Dashboard</h1>
-        <button
-          onClick={() => setOpen(true)}
-          className="grid h-10 w-10 place-items-center rounded-full border border-line text-ink"
-          aria-label="Open agency menu"
-        >
-          <PanelLeft size={18} />
-        </button>
+    <div className="flex h-screen w-full overflow-hidden bg-paper-soft">
+      <div className="hidden h-full w-[260px] shrink-0 border-r border-line bg-white lg:block">
+        <AgencySidebar />
       </div>
 
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[260px_1fr]">
-        <div className="hidden rounded-[var(--radius-lg)] border border-line bg-white lg:block">
-          <div className="sticky top-24">
-            <AgencySidebar />
-          </div>
+      <div className="flex h-full min-w-0 flex-1 flex-col">
+        <div className="flex items-center justify-between border-b border-line bg-white px-4 py-3 lg:hidden">
+          <h1 className="font-display text-lg font-semibold text-ink">Agency Dashboard</h1>
+          <button
+            onClick={() => setOpen(true)}
+            className="grid h-10 w-10 place-items-center rounded-full border border-line text-ink"
+            aria-label="Open agency menu"
+          >
+            <PanelLeft size={18} />
+          </button>
         </div>
 
-        <div className="min-w-0">{children}</div>
+        <div className="min-h-0 flex-1 overflow-y-auto p-4 sm:p-8">{children}</div>
       </div>
 
       {open && (

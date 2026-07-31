@@ -27,7 +27,7 @@ export default async function AgencyProfilePage({ params }: { params: Promise<{ 
   const stats = [
     { label: "Years experience", value: `${agency.yearsExperience}+` },
     { label: "Active tours", value: source === "live" ? agencyTours.length : agency.totalTours },
-    { label: "Completed tours", value: agency.completedTours.toLocaleString("en-IN") },
+    { label: "Followers", value: agency.followersCount.toLocaleString("en-IN") },
     { label: "Rating", value: agency.rating.toFixed(1) },
   ];
 
